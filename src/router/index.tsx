@@ -6,7 +6,7 @@ import ForgetPassword from "../pages/LoginPage/ForgetPassword.tsx";
 import Register from "../pages/LoginPage/Register.tsx";
 import React, {Suspense} from "react";
 import LoadingPage from "../pages/LoadingPage";
-// import TodoListPage from "../pages/TodoListPage";
+import MyInformation from "../pages/MyInformation";
 
 const TodoListPage = React.lazy(() => import("../pages/TodoListPage"))
 
@@ -29,6 +29,7 @@ const MainRoute = () => {
                                    <TodoListPage/>
                                </Suspense>
                            }/>
+                    <Route path="/MyInformation" element={<MyInformation/>}/>
                 </Route>
             </Route>
         )

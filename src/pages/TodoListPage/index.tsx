@@ -5,8 +5,7 @@ import UpdateModal from "./Component/UpdateModal.tsx";
 import TodoListApi from "../../api/TodoListApi";
 import AddDataModal from "./Component/AddDataModal.tsx";
 import Timer from "../../utils/timer";
-import Token from "../../token";
-
+import Avatar from "./Component/Avatar.tsx";
 
 const TodoListPage = () => {
     const useTodoListStore = TodoListStore.use.data()
@@ -22,9 +21,6 @@ const TodoListPage = () => {
     const {showDataApi,changeStatusApi} = TodoListApi()
     const searchData = TodoListStore.use.searchData()
     const {formattedDateTime} = Timer()
-    const {token} = Token()
-
-    console.log("token="+token)
 
     useEffect(() => {
         showDataApi()
@@ -65,11 +61,11 @@ const TodoListPage = () => {
     }
 
     return (
-        <div className="mt-2">
+        <div>
             <div>
-                <DeleteModal item={item}/>
-                <UpdateModal item={item}/>
-                <AddDataModal/>
+                {/*我的头像*/}
+                <Avatar/>
+
                 <table className="table table-pin-rows table-pin-cols w-full table-zebra">
                     {/* head */}
                     <thead>
@@ -147,6 +143,9 @@ const TodoListPage = () => {
                     {/*</tr>*/}
                     </tfoot>
                 </table>
+                <DeleteModal item={item}/>
+                <UpdateModal item={item}/>
+                <AddDataModal/>
             </div>
         </div>
     )

@@ -1,10 +1,13 @@
 import Request from "../../service/http/Request.tsx";
 import {useNavigate} from "react-router-dom";
 import useLoginStore from "../../store/loginStore";
+import Token from "../../token";
 
 const LoginApi = () => {
     const navigate = useNavigate();
     const setToken = useLoginStore.use.setToken()
+    const setEmail = useLoginStore.use.setEmail()
+    const {token} = Token()
     const {instance} = Request()
     const loginPageApi = async (email: string, password: string) => {
         await instance.post("/userEmail/login", {
@@ -14,6 +17,7 @@ const LoginApi = () => {
             console.log("res=" + response)
             setToken(response.data.token)
             if (response.data.status === 200) {
+                setEmail(email)
                 navigate("/TodoListPage")
             } else {
                 alert("账号未找到")
@@ -29,16 +33,16 @@ const LoginApi = () => {
 
     const registerApi = async (userName: string, email: string, code: string, password: string) => {
         await instance.post("/userEmail/signup", {
-            userName: userName,
+            username: userName,
             email: email,
             code: code,
             password: password,
         }).then(response => {
             console.log(response)
-            if(response.data.status === 200){
+            if (response.data.status === 200) {
                 alert("注册成功")
                 navigate("/")
-            }else {
+            } else {
                 alert("注册失败")
             }
         }).catch(error => {
@@ -57,7 +61,24 @@ const LoginApi = () => {
             })
     }
 
-    return {loginPageApi, forgetPasswordApi, registerApi, sendCodeApi}
+    const logOutApi = async (email: string) => {
+        await instance.delete(`userEmail/logout?email=${email}`, {
+            headers: {
+                "token": token
+            }
+        }).then(response => {
+            console.log(response)
+            if (response.status === 200){
+                localStorage.removeItem("token")
+                alert("退出登录成功")
+                navigate("/")
+            }
+        }).catch(error => {
+            console.error(error)
+        })
+    }
+
+    return {loginPageApi, forgetPasswordApi, registerApi, sendCodeApi, logOutApi}
 }
 
 export default LoginApi

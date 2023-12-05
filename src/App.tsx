@@ -7,12 +7,11 @@ const App = () => {
     const [animationParent] = useAutoAnimate()
     const theme = useThemeStore.use.theme()
     return (
-        <div ref={animationParent} data-theme={theme}>
-            <div className="fixed w-full">
+        <div ref={animationParent} data-theme={theme} className="relative">
+            <div className="fixed w-full inset-x-0 top-0">
                 <HeaderComponent/>
             </div>
             <Outlet/>
-
         </div>
     )
 }

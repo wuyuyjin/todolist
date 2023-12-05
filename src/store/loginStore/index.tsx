@@ -4,16 +4,23 @@ import {createJSONStorage, persist} from "zustand/middleware";
 
 interface stateType {
     token: string
+    email: string
 }
 
 interface BearState {
     token: string
+    email: string
     setToken: (token: stateType["token"]) => void
+    setEmail: (email: stateType["email"]) => void
 }
 
 const useLoginStore = createSelectors(create<BearState>()(persist((set) => ({
     token: "",
-    setToken: (token) => set(() => ({token: token}))
+
+    email: '',
+    setToken: (token) => set(() => ({token: token})),
+
+    setEmail: (email) => set(() => ({email: email}))
 }), {
     name: "token",
     storage: createJSONStorage(() => localStorage),

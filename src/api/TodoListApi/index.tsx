@@ -8,6 +8,7 @@ const TodoListApi = () => {
     const setData = useTodoListStore.use.addData()
     const {instance} = Request()
     const {token} = Token()
+
     const showDataApi = () => {
         instance.get("/task", {
             headers: {
@@ -37,26 +38,23 @@ const TodoListApi = () => {
             updateTime: updateTime,
             serialNumber: Number(serialNumber),
             status: status
-        },{
+        }, {
             headers: {
                 "token": token
             }
         }).then(response => {
-            console.log(response)
-
-            if (response.data.status === 200){
+            if (response.data.status === 200) {
                 setData({
                     id: id,
                     content: content,
                     updateTime: updateTime,
-                    serialNumber: serialNumber+1,
+                    serialNumber: serialNumber,
                     status: status
                 })
                 alert("添加成功")
-            }else {
+            } else {
                 alert("添加失败")
             }
-
         }).catch(error => {
             console.error(error)
         })
@@ -102,20 +100,19 @@ const TodoListApi = () => {
                 "token": token
             }
         }).then(response => {
-            console.log(response)
-            if (response.status === 200){
+            if (response.status === 200) {
                 updateData(id, content, updateTime, serialNumber, status)
                 alert("修改状态成功")
-            }else {
+            } else {
                 alert("修改状态失败")
             }
 
         }).catch(error => {
-            console.error("error:"+error)
+            console.error("error:" + error)
         })
     }
 
-    return {showDataApi, deleteApi, updateApi,addDataApi,changeStatusApi}
+    return {showDataApi, deleteApi, updateApi, addDataApi, changeStatusApi}
 }
 
 export default TodoListApi

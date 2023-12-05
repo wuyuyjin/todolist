@@ -6,6 +6,7 @@ const Request = () => {
 
     const instance = axios.create({
         baseURL: "http://114.132.67.226:3080",
+        // baseURL: "http://10.23.98.35:3080",
         timeout: 5000
     })
 
